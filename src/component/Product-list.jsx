@@ -1,71 +1,38 @@
+import { fetchProducts } from '../restApi/fetchProducts';
+import Loader from './Loader';
+import Product from './Product';
+import { useEffect, useState } from 'react';
+
 const ProductList = () => {
-    return (
-        <div className="container z-10 mx-auto my-12 p-9">
-            <div className="grid grid-cols-1 mt-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
+  const [products, setProducts] = useState([]);
+  const [error, setError] = useState('');
 
-                    <div className="card w-100 bg-white shadow-xl">
-                        <figure><img src="https://static-01.daraz.com.bd/p/b802b8ebb0a784ec791caa75e2d4de66.jpg" alt="Shoes" /></figure>
-                        <div className="card-body">
-                            <h6 className="text-black">iPhone 14 Pro Max iOS 16 6.7 inches Super Retina</h6>
-                            <p className="text-sm text-gray-400">If a dog chews shoes whose shoes does he choose?</p>
-                            <h6 className="font-bold">Price: $1,000</h6>
-                            <div className="card-actions justify-end">
-                                <button className="btn btn-sm btn-outline btn-primary">Add Cart</button>
-                            </div>
-                        </div>
-                    </div>
+  useEffect(() => {
+    fetchProducts()
+      .then((data) => setProducts(data))
+      .catch((err) => console.log(err));
+  }, []);
 
-                <div className="card w-100 bg-white shadow-xl">
-                    <figure><img src="https://static-01.daraz.com.bd/p/b802b8ebb0a784ec791caa75e2d4de66.jpg" alt="Shoes" /></figure>
-                    <div className="card-body">
-                        <h6 className="text-black">iPhone 14 Pro Max iOS 16 6.7 inches Super Retina</h6>
-                        <p className="text-sm text-gray-400">If a dog chews shoes whose shoes does he choose?</p>
-                        <h6 className="font-bold">Price: $1,000</h6>
-                        <div className="card-actions justify-end">
-                            <button className="btn btn-sm btn-outline btn-primary">Add Cart</button>
-                        </div>
-                    </div>
-                </div>
+  // Decide what to render
+  let output;
 
-                <div className="card w-100 bg-white shadow-xl">
-                    <figure><img src="https://static-01.daraz.com.bd/p/b802b8ebb0a784ec791caa75e2d4de66.jpg" alt="Shoes" /></figure>
-                    <div className="card-body">
-                        <h6 className="text-black">iPhone 14 Pro Max iOS 16 6.7 inches Super Retina</h6>
-                        <p className="text-sm text-gray-400">If a dog chews shoes whose shoes does he choose?</p>
-                        <h6 className="font-bold">Price: $1,000</h6>
-                        <div className="card-actions justify-end">
-                            <button className="btn btn-sm btn-outline btn-primary">Add Cart</button>
-                        </div>
-                    </div>
-                </div>
-                <div className="card w-100 bg-white shadow-xl">
-                    <figure><img src="https://static-01.daraz.com.bd/p/b802b8ebb0a784ec791caa75e2d4de66.jpg" alt="Shoes" /></figure>
-                    <div className="card-body">
-                        <h6 className="text-black">iPhone 14 Pro Max iOS 16 6.7 inches Super Retina</h6>
-                        <p className="text-sm text-gray-400">If a dog chews shoes whose shoes does he choose?</p>
-                        <h6 className="font-bold">Price: $1,000</h6>
-                        <div className="card-actions justify-end">
-                            <button className="btn btn-sm btn-outline btn-primary">Add Cart</button>
-                        </div>
-                    </div>
-                </div>
+  if (error) {
+    output = <div>There is an Error</div>;
+  } else if (products?.length > 0) {
+    output = products.map((product) => (
+      <Product key={product.id} product={product} />
+    ));
+  } else {
+    output = <div>There is no Products!</div>;
+  }
 
-                <div className="card w-100 bg-white shadow-xl">
-                    <figure><img src="https://static-01.daraz.com.bd/p/b802b8ebb0a784ec791caa75e2d4de66.jpg" alt="Shoes" /></figure>
-                    <div className="card-body">
-                        <h6 className="text-black">iPhone 14 Pro Max iOS 16 6.7 inches Super Retina</h6>
-                        <p className="text-sm text-gray-400">If a dog chews shoes whose shoes does he choose?</p>
-                        <h6 className="font-bold">Price: $1,000</h6>
-                        <div className="card-actions justify-end">
-                            <button className="btn btn-sm btn-outline btn-primary">Add Cart</button>
-                        </div>
-                    </div>
-                </div>
-
-
-
-            </div>
-        </div>
-    );
+  return (
+    <div className="container z-10 mx-auto my-12 p-9">
+      <div className="grid grid-cols-1 mt-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {(output = products?.length > 0 ? output : <Loader />)}
+      </div>
+    </div>
+  );
 };
+
 export default ProductList;
