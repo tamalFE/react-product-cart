@@ -1,4 +1,4 @@
-export const fetchProducts = async () => {
+const fetchProducts = async () => {
   let response = await fetch(
     'https://cart-api.teamrabbil.com/api/product-list'
   );
@@ -8,4 +8,4 @@ export const fetchProducts = async () => {
   return object.data;
 };
 
-export const login = () => {};
+export default fetchProducts;

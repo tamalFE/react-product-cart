@@ -1,4 +1,4 @@
-import { fetchProducts } from '../restApi/fetchProducts';
+import fetchProducts from '../restApi/fetchProducts';
 import Loader from './Loader';
 import Product from './Product';
 import { useEffect, useState } from 'react';
@@ -10,20 +10,21 @@ const ProductList = () => {
   useEffect(() => {
     fetchProducts()
       .then((data) => setProducts(data))
-      .catch((err) => console.log(err));
+      .catch((err) => setError('There ws an Error'));
   }, []);
 
   // Decide what to render
+
   let output;
 
   if (error) {
-    output = <div>There is an Error</div>;
+    output = <h1>There is an Error</h1>;
   } else if (products?.length > 0) {
     output = products.map((product) => (
       <Product key={product.id} product={product} />
     ));
   } else {
-    output = <div>There is no Products!</div>;
+    output = <h1>There is no Products!</h1>;
   }
 
   return (
