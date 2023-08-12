@@ -42,7 +42,7 @@ const LoginPage = () => {
                   placeholder="Email.."
                 />
                 <button
-                  onChange={handleLogin}
+                  onClick={handleLogin}
                   className="btn rounded-lg w-full my-4 btn-primary"
                 >
                   Next

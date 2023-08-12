@@ -1,4 +1,24 @@
+import { useState } from 'react';
+import verifyLogin from '../restApi/verifyLogin';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+
 const OtpPage = () => {
+  const [pin, setPin] = useState('');
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const email = searchParams.get('email');
+
+  const handleVerifyLogin = () => {
+    verifyLogin(email, pin)
+      .then((data) => {
+        if (data?.msg === 'success') {
+          localStorage.setItem('token', data.data);
+          navigate('/');
+        }
+      })
+      .catch((err) => console.log('There was an error'));
+  };
+
   return (
     <div className="container  mx-auto">
       <div className="grid grid-cols-1 mt-2 md:grid-cols-1 lg:grid-cols-1 gap-3">
@@ -18,11 +38,16 @@ const OtpPage = () => {
                   4 Digit Verification PIN has been send to your email
                 </p>
                 <input
+                  value={pin}
                   type="text"
                   placeholder="4 Digit Pin"
+                  onChange={(e) => setPin(e.target.value)}
                   className="input w-full bg-white rounded-lg input-bordered"
                 />
-                <button className="btn rounded-lg w-full my-4 btn-primary">
+                <button
+                  className="btn rounded-lg w-full my-4 btn-primary"
+                  onClick={handleVerifyLogin}
+                >
                   Next
                 </button>
               </div>
