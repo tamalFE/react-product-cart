@@ -1,8 +1,10 @@
 import createCart from '../restApi/createCart';
 
-const Product = ({ product = {} }) => {
+const Product = ({ product }) => {
+  const { id, title, image, short_des, price } = product || {};
+
   const handleAddCart = () => {
-    createCart(product.id)
+    createCart(id)
       .then((data) => {
         if (data?.msg === 'success') {
           alert('The product is added😊');
@@ -14,12 +16,12 @@ const Product = ({ product = {} }) => {
   return (
     <div className="card w-100 bg-white shadow-xl">
       <figure>
-        <img src={product.image} alt={product.title} />
+        <img src={image} alt={title} />
       </figure>
       <div className="card-body">
-        <h6 className="text-black">{product.title}</h6>
-        <p className="text-sm text-gray-400">{product.short_des}</p>
-        <h6 className="font-bold">Price: ${product.price}</h6>
+        <h6 className="text-black">{title}</h6>
+        <p className="text-sm text-gray-400">{short_des}</p>
+        <h6 className="font-bold">Price: ${price}</h6>
         <div className="card-actions justify-end">
           <button
             className="btn btn-sm btn-outline btn-primary"

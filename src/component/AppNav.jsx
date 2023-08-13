@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+
 const AppNav = () => {
   return (
     <div className="navbar fixed top-0 bg-white z-50 px-20 drop-shadow-lg bg-base-100">

@@ -21,7 +21,7 @@ const CartList = () => {
     removeCart(productID)
       .then((data) => {
         if (data?.msg === 'success') {
-          // remove that item from my local store: items
+          // remove that item from local store: items
 
           const remainingItem = items.filter(
             (item) => item.product.id !== productID
