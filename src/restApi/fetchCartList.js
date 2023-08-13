@@ -1,9 +1,14 @@
 const fetchCartList = async () => {
-  let response = await fetch('https://cart-api.teamrabbil.com/api/cart-list');
+  let response = await fetch('https://cart-api.teamrabbil.com/api/cart-list', {
+    method: 'GET',
+    headers: {
+      token: localStorage.getItem('token'),
+    },
+  });
 
-  let object = await response.json();
+  let data = await response.json();
 
-  return object.data;
+  return data;
 };
 
 export default fetchCartList;
