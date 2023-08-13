@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import fetchCartList from '../restApi/fetchCartList';
 import CartItem from './CartItem';
 import removeCart from '../restApi/removeCart';
+import convertPriceStringToNumber from '../restApi/convertPriceStringToNumber';
 
 const CartList = () => {
   const [items, setItems] = useState([]);
@@ -32,6 +33,16 @@ const CartList = () => {
       .catch((err) => console.log('There was an Error'));
   };
 
+  const calculateTotalPrice = () => {
+    const totalPrice = items.reduce((total, currentValue) => {
+      const price = convertPriceStringToNumber(currentValue);
+
+      return total + price;
+    }, 0);
+
+    return totalPrice.toLocaleString();
+  };
+
   return (
     <div className="container z-10 mx-auto my-12 p-9">
       <div className="grid grid-cols-1 mt-2 md:grid-cols-1 lg:grid-cols-3 gap-3">
@@ -50,7 +61,7 @@ const CartList = () => {
         <div className="card shadow-xl h-44 w-100 bg-white">
           <div className="card-body">
             <h2 className="card-title">Total Item: 10</h2>
-            <h6>Total Price: $1,000</h6>
+            <h6>Total Price: ${calculateTotalPrice()}</h6>
             <div className="card-actions">
               <button className="btn btn-sm my-4 btn-primary btn-outline">
                 Check out
