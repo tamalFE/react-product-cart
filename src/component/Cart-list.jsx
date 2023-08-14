@@ -43,6 +43,16 @@ const CartList = () => {
     return totalPrice.toLocaleString();
   };
 
+  const calculateTotalItems = () => {
+    const totalItems = items.reduce((total, currentValue) => {
+      const item = currentValue.product.stock;
+
+      return total + item;
+    }, 0);
+
+    return totalItems;
+  };
+
   return (
     <div className="container z-10 mx-auto my-12 p-9">
       <div className="grid grid-cols-1 mt-2 md:grid-cols-1 lg:grid-cols-3 gap-3">
@@ -60,7 +70,7 @@ const CartList = () => {
 
         <div className="card shadow-xl h-44 w-100 bg-white">
           <div className="card-body">
-            <h2 className="card-title">Total Item: 10</h2>
+            <h2 className="card-title">Total Item: {calculateTotalItems()}</h2>
             <h6>Total Price: ${calculateTotalPrice()}</h6>
             <div className="card-actions">
               <button className="btn btn-sm my-4 btn-primary btn-outline">

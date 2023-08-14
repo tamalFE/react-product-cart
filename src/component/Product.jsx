@@ -10,7 +10,8 @@ const Product = ({ product }) => {
     createCart(id)
       .then((data) => {
         if (data?.msg === 'success') {
-          //alert('The product is added😊');
+          alert('The product is added😊');
+        } else {
           navigate('/login');
         }
       })
