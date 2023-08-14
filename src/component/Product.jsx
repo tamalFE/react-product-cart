@@ -1,13 +1,17 @@
+import { useNavigate } from 'react-router-dom';
 import createCart from '../restApi/createCart';
 
 const Product = ({ product }) => {
   const { id, title, image, short_des, price } = product || {};
 
+  const navigate = useNavigate();
+
   const handleAddCart = () => {
     createCart(id)
       .then((data) => {
         if (data?.msg === 'success') {
-          alert('The product is added😊');
+          //alert('The product is added😊');
+          navigate('/login');
         }
       })
       .catch((err) => console.log('There was an error!'));
