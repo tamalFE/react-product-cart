@@ -10,9 +10,8 @@ const Product = ({ product }) => {
     createCart(id)
       .then((data) => {
         if (data?.msg === 'success') {
-          alert('The product is added😊');
         } else {
-          navigate('/login');
+          navigate(`/login?productID=${id}`, { state: { goto: '/cart-list' } });
         }
       })
       .catch((err) => console.log('There was an error!'));

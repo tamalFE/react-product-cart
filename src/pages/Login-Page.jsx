@@ -1,18 +1,31 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams, useLocation } from 'react-router-dom';
 import userLogin from '../restApi/userLogin';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const productID = searchParams.get('productID');
+  const { state } = useLocation();
+
+  console.log(productID);
 
   const handleLogin = () => {
     userLogin(email)
       .then((data) => {
         if (data?.msg === 'success') {
-          navigate(`/otp?email=${email}`);
+          let url = `/otp?email=${email}`;
+          if (state && state.goto) {
+            alert(url);
+            const productSate = { goto: state.goto, productID };
+            navigate(url, { state: productSate });
+          } else {
+            navigate(url);
+          }
         }
       })
+
       .catch((err) => <h1>There was an Error</h1>);
   };
 

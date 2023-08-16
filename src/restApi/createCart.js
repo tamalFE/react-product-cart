@@ -1,10 +1,11 @@
-const createCart = async (productId) => {
+const createCart = async (productId, token) => {
+  console.log({ productId, token });
   let response = await fetch(
     `https://cart-api.teamrabbil.com/api/create-cart/${productId}`,
     {
       method: 'GET',
       headers: {
-        token: localStorage.getItem('token'),
+        token: token || localStorage.getItem('token'),
       },
     }
   );
