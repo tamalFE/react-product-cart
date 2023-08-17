@@ -13,8 +13,6 @@ const ProductList = () => {
       .catch((err) => setError('There ws an Error'));
   }, []);
 
-  // Decide what to render
-
   let output;
 
   if (error) {

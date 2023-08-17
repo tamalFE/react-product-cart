@@ -7,6 +7,11 @@ const Product = ({ product }) => {
   const navigate = useNavigate();
 
   const handleAddCart = () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate(`/login?productID=${id}`, { state: { goto: '/cart-list' } });
+      return;
+    }
     createCart(id)
       .then((data) => {
         if (data?.msg === 'success') {

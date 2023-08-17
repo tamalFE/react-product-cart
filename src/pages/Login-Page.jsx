@@ -10,13 +10,12 @@ const LoginPage = () => {
   const { state } = useLocation();
 
   const handleLogin = () => {
-    console.log(state);
     userLogin(email)
       .then((data) => {
         if (data?.msg === 'success') {
           let url = `/otp?email=${email}`;
+
           if (state && state.goto) {
-            alert(url);
             const productSate = { goto: state.goto, productID };
             navigate(url, { state: productSate });
           } else {

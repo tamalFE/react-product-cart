@@ -1,35 +1,35 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import verifyLogin from '../restApi/verifyLogin';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import createCart from '../restApi/createCart';
 
 const OtpPage = () => {
   const [pin, setPin] = useState('');
+  const [token, setToken] = useState('');
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const email = searchParams.get('email');
-  const productID = searchParams.get('id');
   const { state } = useLocation();
 
-  console.log(state);
+  useEffect(() => {
+    if (state && state.goto && token.length > 0) {
+      createCart(state.productID, token)
+        .then((res) => {
+          navigate(state.goto);
+        })
+        .catch((err) => {
+          console.error(err);
+          navigate('/');
+        });
+    }
+  }, [token]);
 
   const handleVerifyLogin = () => {
     verifyLogin(email, pin)
       .then((data) => {
         if (data?.msg === 'success') {
           localStorage.setItem('token', data.data);
-          if (state && state.goto) {
-            createCart(state.productID, data.data)
-              .then(() => {
-                navigate(state.goto);
-              })
-              .catch((err) => {
-                console.error(err);
-                navigate('/');
-              });
-          } else {
-            navigate('/');
-          }
+          setToken(data.data);
         }
       })
       .catch((err) => console.log('There was an error'));
