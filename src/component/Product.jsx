@@ -10,6 +10,7 @@ const Product = ({ product }) => {
     createCart(id)
       .then((data) => {
         if (data?.msg === 'success') {
+          alert('The cart wsa added 😊');
         } else {
           navigate(`/login?productID=${id}`, { state: { goto: '/cart-list' } });
         }

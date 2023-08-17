@@ -27,10 +27,14 @@ const ProductList = () => {
     output = <h1>There is no Products!</h1>;
   }
 
+  if (products?.length <= 0) {
+    return <Loader />;
+  }
+
   return (
     <div className="container z-10 mx-auto my-12 p-9">
       <div className="grid grid-cols-1 mt-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {(output = products?.length > 0 ? output : <Loader />)}
+        {output}
       </div>
     </div>
   );

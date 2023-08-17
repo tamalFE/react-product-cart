@@ -9,9 +9,8 @@ const LoginPage = () => {
   const productID = searchParams.get('productID');
   const { state } = useLocation();
 
-  console.log(productID);
-
   const handleLogin = () => {
+    console.log(state);
     userLogin(email)
       .then((data) => {
         if (data?.msg === 'success') {

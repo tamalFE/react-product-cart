@@ -15,7 +15,7 @@ const CartList = () => {
         }
       })
       .catch((err) => console.log('There was an error'));
-  });
+  }, []);
 
   const handleRemoveCart = (productID) => {
     removeCart(productID)
