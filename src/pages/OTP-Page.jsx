@@ -13,26 +13,32 @@ const OtpPage = () => {
 
   useEffect(() => {
     if (state && state.goto && token.length > 0) {
-      createCart(state.productID, token)
-        .then((res) => {
-          navigate(state.goto);
-        })
-        .catch((err) => {
-          console.error(err);
-          navigate('/');
-        });
+      setTimeout(() => {
+        createCart(state.productID, token)
+          .then((res) => {
+            console.log({ res });
+            navigate(state.goto);
+          })
+          .catch((err) => {
+            console.error(err);
+            navigate('/');
+          });
+      }, 2000);
     }
   }, [token]);
 
   const handleVerifyLogin = () => {
-    verifyLogin(email, pin)
-      .then((data) => {
-        if (data?.msg === 'success') {
-          localStorage.setItem('token', data.data);
-          setToken(data.data);
-        }
-      })
-      .catch((err) => console.log('There was an error'));
+    setTimeout(() => {
+      verifyLogin(email, pin)
+        .then((data) => {
+          if (data?.msg === 'success') {
+            localStorage.setItem('token', data.data);
+            setToken(data.data);
+            !state && navigate('/');
+          }
+        })
+        .catch((err) => console.log('There was an error'));
+    }, 2000);
   };
 
   return (
