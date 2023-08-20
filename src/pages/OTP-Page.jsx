@@ -12,8 +12,8 @@ const OtpPage = () => {
   const { state } = useLocation();
 
   useEffect(() => {
-    if (state && state.goto && token.length > 0) {
-      setTimeout(() => {
+    setTimeout(() => {
+      if (state && state.goto && token.length > 0) {
         createCart(state.productID, token)
           .then((res) => {
             console.log({ res });
@@ -23,8 +23,8 @@ const OtpPage = () => {
             console.error(err);
             navigate('/');
           });
-      }, 2000);
-    }
+      }
+    }, 2000);
   }, [token]);
 
   const handleVerifyLogin = () => {
