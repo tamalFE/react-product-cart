@@ -1,6 +1,12 @@
+import { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 
 const AppNav = () => {
+  const [token, setToken] = useState(null);
+  useEffect(() => {
+    const gotToken = localStorage.getItem('token');
+    gotToken && setToken(gotToken);
+  }, []);
   const navigate = useNavigate();
   return (
     <div className="navbar fixed top-0 bg-white z-50 px-20 drop-shadow-lg bg-base-100">
@@ -34,13 +40,17 @@ const AppNav = () => {
             className="menu menu-sm dropdown-content mt-3 z-[100] p-2 shadow bg-base-100 rounded-box w-52"
           >
             <li>
-              <a
-                onClick={() => {
-                  localStorage.removeItem('token');
-                }}
-              >
-                Logout
-              </a>
+              {token ? (
+                <a
+                  onClick={() => {
+                    localStorage.removeItem('token');
+                  }}
+                >
+                  Logout
+                </a>
+              ) : (
+                <NavLink to="/login">Login</NavLink>
+              )}
             </li>
           </ul>
         </div>
